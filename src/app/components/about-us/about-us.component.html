@@ -1,0 +1,201 @@
+<app-cover [title]="yourTitle" [sub1]="yourSub1" [sub2]="yourSub2"></app-cover>
+
+@if (aboutInfo) {
+  <div class="w-full max-w-7xl mx-auto">
+    <form
+    #form="ngForm"
+    (ngSubmit)="onFormSubmit()"
+    class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+  >
+
+    <div class="mb-4">
+      <label
+        class="block text-gray-700 text-sm font-bold mb-2"
+        for="heading"
+      >
+      Heading
+      </label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="heading"
+        name="heading"
+        type="text"
+        placeholder="Enter your heading"
+        [(ngModel)]="aboutInfo.heading"
+      />
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
+        Title 01
+      </label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="title"
+        name="title"
+        type="text"
+        placeholder="Enter your title"
+        [(ngModel)]="aboutInfo.title"
+      />
+    </div>
+    <div class="mb-4">
+      <label
+        class="block text-gray-700 text-sm font-bold mb-2"
+        for="description"
+      >
+        Description 01
+      </label>
+      <textarea
+        name="description"
+        id="description"
+        class="shadow appearance-none border border-base-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        cols="30"
+        rows="10"
+        placeholder="Enter your description"
+        [(ngModel)]="aboutInfo.description"
+      ></textarea>
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="title2">
+        Title 02
+      </label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="title2"
+        name="title2"
+        type="text"
+        placeholder="Enter your title"
+        [(ngModel)]="aboutInfo.title2"
+      />
+    </div>
+    <div class="mb-4">
+      <label
+        class="block text-gray-700 text-sm font-bold mb-2"
+        for="description2"
+      >
+        Description 02
+      </label>
+      <textarea
+        name="description2"
+        id="description2"
+        class="shadow appearance-none border border-base-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        cols="30"
+        rows="10"
+        placeholder="Enter your description"
+        [(ngModel)]="aboutInfo.description2"
+      ></textarea>
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="title3">
+        Title 03
+      </label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="title3"
+        name="title3"
+        type="text"
+        placeholder="Enter your title"
+        [(ngModel)]="aboutInfo.title3"
+      />
+    </div>
+    <div class="mb-4">
+      <label
+        class="block text-gray-700 text-sm font-bold mb-2"
+        for="description3"
+      >
+        Description 03
+      </label>
+      <textarea
+        name="description3"
+        id="description3"
+        class="shadow appearance-none border border-base-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        cols="30"
+        rows="10"
+        placeholder="Enter your description"
+        [(ngModel)]="aboutInfo.description3"
+      ></textarea>
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="title4">
+        Title 04
+      </label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="title4"
+        name="title4"
+        type="text"
+        placeholder="Enter your title"
+        [(ngModel)]="aboutInfo.title4"
+      />
+    </div>
+    <div class="mb-4">
+      <label
+        class="block text-gray-700 text-sm font-bold mb-2"
+        for="description4"
+      >
+        Description 04
+      </label>
+      <textarea
+        name="description4"
+        id="description4"
+        class="shadow appearance-none border border-base-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        cols="30"
+        rows="10"
+        placeholder="Enter your description"
+        [(ngModel)]="aboutInfo.description4"
+      ></textarea>
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="title5">
+        Title 05
+      </label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="title5"
+        name="title5"
+        type="text"
+        placeholder="Enter your title"
+        [(ngModel)]="aboutInfo.title5"
+      />
+    </div>
+    <div class="mb-4">
+      <label
+        class="block text-gray-700 text-sm font-bold mb-2"
+        for="description5"
+      >
+        Description 05
+      </label>
+      <textarea
+        name="description5"
+        id="description5"
+        class="shadow appearance-none border border-base-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        cols="30"
+        rows="10"
+        placeholder="Enter your description"
+        [(ngModel)]="aboutInfo.description5"
+      ></textarea>
+    </div>
+    <input
+      type="submit"
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+      value="Update"
+    />
+  </form>
+    <p class="text-center text-gray-500 text-xs">
+      &copy;2023 <span class="text-accent"> Medi-Trust Engineers</span>.
+      All rights reserved.
+    </p>
+  </div>
+} @else {
+  <div
+    class="block mt-10 mb-4 mx-auto h-12 w-12 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+    role="status"
+  >
+    <span
+      class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
+      >Loading...</span
+    >
+  </div>
+
+  <div class="text-center">Loading...</div>
+}
+

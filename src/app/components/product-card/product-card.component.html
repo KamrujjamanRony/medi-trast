@@ -1,0 +1,22 @@
+
+<a (click)="scrollToTopAndNavigate('/product/' + product.id)" class="card-link flex cursor-pointer">
+  <div
+    data-aos="flip-up"
+    class="card md:w-60 sm:w-[90vw] bg-base-100 shadow-xl rounded mb-8 min-h-[500px]"
+  >
+    <div class="aspect-w-4 aspect-h-5">
+      <img
+      [src]="
+      product?.imageUrl !== ''
+        ? ImageApi + product.imageUrl
+        : emptyImg
+    "
+        alt="Product Image"
+        class="object-cover w-full h-[250px] p-2"
+      />
+    </div>
+    <div class="card-body p-4">
+      <h2 class="text-2xl">{{ product?.productName }}</h2>
+    </div>
+  </div>
+</a>

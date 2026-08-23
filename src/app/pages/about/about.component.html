@@ -1,0 +1,79 @@
+<app-cover [title]="yourTitle" [sub1]="yourSub1" [sub2]="yourSub2"></app-cover>
+
+<div class="container mx-auto mt-5">
+  <h1
+    class="mb-5 text-2xl md:text-5xl lg:text-7xl font-bold uppercase font-cinzel text-center"
+  >
+    {{ about?.heading }}
+  </h1>
+
+  <div
+    class="block bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.1),0_10px_20px_-2px_rgba(0,0,0,0.07)] md:m-12"
+  >
+  @if (about?.title) {
+    <div class="p-6">
+      <h2
+        style="white-space: pre-line"
+        class="mb-8 text-xl md:text:2xl lg:text-4xl font-bold text-orange-500 uppercase"
+      >
+        {{ about?.title }}
+      </h2>
+      <p style="white-space: pre-line" class="mb-8 pb-2 text-slate-400 lg:pb-0">
+        {{ about?.description }}
+      </p>
+    </div>
+  }
+  @if (about?.title2) {
+    <div class="p-6">
+      <h2
+        style="white-space: pre-line"
+        class="mb-8 text-xl md:text:2xl lg:text-4xl font-bold text-orange-500 uppercase"
+      >
+        {{ about?.title2 }}
+      </h2>
+      <p style="white-space: pre-line" class="mb-8 pb-2 text-slate-400 lg:pb-0">
+        {{ about?.description2 }}
+      </p>
+    </div>
+  }
+  @if (about?.title3) {
+    <div class="p-6">
+      <h2
+        style="white-space: pre-line"
+        class="mb-8 text-xl md:text:2xl lg:text-4xl font-bold text-orange-500 uppercase"
+      >
+        {{ about?.title3 }}
+      </h2>
+      <p style="white-space: pre-line" class="mb-8 pb-2 text-slate-400 lg:pb-0">
+        {{ about?.description3 }}
+      </p>
+    </div>
+  }
+  @if (about?.title4) {
+    <div class="p-6">
+      <h2
+        style="white-space: pre-line"
+        class="mb-8 text-xl md:text:2xl lg:text-4xl font-bold text-orange-500 uppercase"
+      >
+        {{ about?.title4 }}
+      </h2>
+      <p style="white-space: pre-line" class="mb-8 pb-2 text-slate-400 lg:pb-0">
+        {{ about?.description4 }}
+      </p>
+    </div>
+  }
+  @if (about?.title5) {
+    <div class="p-6">
+      <h2
+        style="white-space: pre-line"
+        class="mb-8 text-xl md:text:2xl lg:text-4xl font-bold text-orange-500 uppercase"
+      >
+        {{ about?.title5 }}
+      </h2>
+      <p style="white-space: pre-line" class="mb-8 pb-2 text-slate-400 lg:pb-0">
+        {{ about?.description5 }}
+      </p>
+    </div>
+  }
+  </div>
+</div>

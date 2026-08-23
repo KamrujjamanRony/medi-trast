@@ -1,0 +1,219 @@
+<app-cover [title]="yourTitle" [sub1]="yourSub1" [sub2]="yourSub2"></app-cover>
+
+@if (productInfo) {
+  <div class="w-full max-w-7xl mx-auto">
+    <form
+    #form="ngForm"
+    (ngSubmit)="onFormSubmit()"
+    class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+  >
+    <div class="mb-4">
+      <label
+        class="block text-gray-700 text-sm font-bold mb-2"
+        for="productCategory"
+      >
+        Product Category
+      </label>
+      <select
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="productCategory"
+        name="productCategory"
+        [(ngModel)]="productInfo.productCategory"
+      >
+        <option value="" disabled selected>Select Product Category</option>
+        <option value="SURGICAL EQUIPMENT">SURGICAL EQUIPMENT</option>
+        <option value="MEDICAL FURNITURE">MEDICAL FURNITURE</option>
+        <option value="MEDICAL EQUIPMENT">MEDICAL EQUIPMENT</option>
+        <option value="LABORATORY EQUIPMENT">LABORATORY EQUIPMENT</option>
+        <option value="DENTAL EQUIPMENT">DENTAL EQUIPMENT</option>
+        <option value="ACCESSORIES & OTHERS">ACCESSORIES & OTHERS</option>
+      </select>
+    </div>
+
+    <div class="mb-4">
+      <label
+        class="block text-gray-700 text-sm font-bold mb-2"
+        for="productName"
+      >
+        Product Name
+      </label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="productName"
+        name="ProductName"
+        type="text"
+        placeholder="Enter Product Name"
+        [(ngModel)]="productInfo.productName"
+      />
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="brand">
+        Product Brand
+      </label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="brand"
+        name="brand"
+        type="text"
+        placeholder="Enter Product Brand"
+        [(ngModel)]="productInfo.brand"
+      />
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="model">
+        Product Model
+      </label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="model"
+        name="model"
+        type="text"
+        placeholder="Enter Product Model"
+        [(ngModel)]="productInfo.model"
+      />
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="origin">
+        Product Origin
+      </label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="origin"
+        name="origin"
+        type="text"
+        placeholder="Enter Product Origin"
+        [(ngModel)]="productInfo.origin"
+      />
+    </div>
+    <div class="mb-4">
+      <label
+        class="block text-gray-700 text-sm font-bold mb-2"
+        for="catalogUrl"
+      >
+        Product Catalog
+      </label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="catalogUrl"
+        name="catalogUrl"
+        type="text"
+        placeholder="Enter Catalog URL"
+        [(ngModel)]="productInfo.catalogUrl"
+      />
+    </div>
+    <div class="mb-4" hidden>
+      <label
+        class="block text-gray-700 text-sm font-bold mb-2"
+        for="imageUrl"
+      >
+        Product Catalog
+      </label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="imageUrl"
+        name="imageUrl"
+        type="text"
+        placeholder="Enter Catalog URL"
+        [(ngModel)]="productInfo.imageUrl"
+      />
+    </div>
+    <div class="mb-4">
+      <label for="imageFile" class="block text-gray-700 text-sm font-bold mb-2"
+        >Product Image</label
+      >
+      <img
+          [src]="
+            productInfo.imageUrl !== ''
+              ? ImageApi + productInfo.imageUrl
+              : emptyImg
+          "
+          alt="Product Image"
+          class="w-16 md:w-24 rounded"
+        />
+      <input
+        class="relative m-0 block w-full min-w-0 flex-auto rounded border border-solid border-neutral-200 bg-clip-padding px-3 py-[0.32rem] text-base font-normal text-neutral-700 transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-400 file:px-3 file:py-[0.32rem] file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-neutral-500 focus:border-primary focus:text-neutral-700 focus:shadow-te-primary focus:outline-none dark:border-neutral-200 dark:text-neutral-500 dark:file:bg-neutral-700 dark:file:text-neutral-400 dark:focus:border-primary focus:shadow-outline"
+        type="file"
+        id="imageFile"
+        accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
+        (change)="onFileChange($event)"
+      />
+      <label class="label">
+        <span class="label-text-alt text-red-500">{{err}}</span>
+      </label>
+    </div>
+
+    <div class="mb-4">
+      <label
+        class="block text-gray-700 text-sm font-bold mb-2"
+        for="description"
+      >
+        Description
+      </label>
+      <textarea
+        name="description"
+        id="description"
+        class="shadow appearance-none border border-base-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        cols="30"
+        rows="10"
+        placeholder="Description"
+        [(ngModel)]="productInfo.description"
+      ></textarea>
+    </div>
+    <div class="mb-4">
+      <label
+        class="block text-gray-700 text-sm font-bold mb-2"
+        for="aditionalInformation"
+      >
+        Additional Information
+      </label>
+      <textarea
+        name="aditionalInformation"
+        id="aditionalInformation"
+        class="shadow appearance-none border border-base-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        cols="30"
+        rows="10"
+        placeholder="Enter Additional Information"
+        [(ngModel)]="productInfo.aditionalInformation"
+      ></textarea>
+    </div>
+    <div class="mb-4">
+      <label
+        class="block text-gray-700 text-sm font-bold mb-2"
+        for="specialFeature"
+      >
+        Special Feature
+      </label>
+      <textarea
+        name="specialFeature"
+        id="specialFeature"
+        class="shadow appearance-none border border-base-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        cols="30"
+        rows="10"
+        placeholder="Enter Special Feature"
+        [(ngModel)]="productInfo.specialFeature"
+      ></textarea>
+    </div>
+    <input
+      type="submit"
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+      value="Update Product"
+    />
+  </form>
+    <p class="text-center text-gray-500 text-xs">
+      &copy;2023 <span class="text-accent"> Medi-Trust Engineers</span>.
+      All rights reserved.
+    </p>
+  </div>
+} @else {
+  <div
+    class="block mt-10 mb-4 mx-auto h-12 w-12 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+    role="status"
+  >
+    <span
+      class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
+      >Loading...</span
+    >
+  </div>
+
+  <div class="text-center">Loading...</div>
+}

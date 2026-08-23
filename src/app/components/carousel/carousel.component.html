@@ -1,0 +1,32 @@
+@if (carousel$) {
+  <div class="carousel-container h-[20vh] md:h-[50vh] lg:h-[80vh] mx-0 w-full">
+    <igx-carousel #carousel [interval]="3000" [navigation]="false">
+      @for (slide of carousel$ | async; track $index) {
+        <igx-slide style="height: fit-content;">
+          <div
+            [style.backgroundImage]="'url(' + ImageApi + slide?.imageUrl + ')'"
+            class="hero h-[20vh] md:h-[50vh] lg:h-[80vh]"
+          >
+          @if (slide?.title) {<div class="hero-overlay bg-opacity-40"></div>}
+            <div class="hero-content text-center text-neutral-content">
+              <div data-aos="zoom-in" class="max-w-xl text-white">
+                @if (slide?.title) {<h1 class="lg:mb-5 md:mb-2 mb-0 lg:text-5xl md:text-2xl text-sm font-bold">{{slide?.title}}</h1>}
+                @if (slide?.description) {
+                  <p class="lg:mb-5 md:mb-2 mb-0 lg:text-lg md:text-sm text-xs">
+                    {{slide?.description}}
+                  </p>
+                }
+                <button
+                routerLink="contact"
+                  class="btn btn-accent rounded text-white capitalize px-2 md:px-5 lg:px-8 font-light lg:text-xl md:text-md text-sm btn-xs md:btn-md"
+                >
+                  Contact Us
+                </button>
+              </div>
+            </div>
+          </div>
+        </igx-slide>
+      }
+    </igx-carousel>
+  </div>
+}

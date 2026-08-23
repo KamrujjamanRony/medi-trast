@@ -1,0 +1,55 @@
+/* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@200;400;600;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Righteous&family=Roboto+Slab:wght@900&display=swap");
+@import url("https://fonts.cdnfonts.com/css/bauhaus-93");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.widget_title {
+    border-bottom: 1px solid #eeeeee;
+    padding: 0px !important;
+    font-weight: 700;
+  }
+  .widget_title::after {
+    content: "";
+    width: 120px;
+    height: 3px;
+    background-color: #00a393;
+    display: block;
+    margin-top: 5px;
+  }
+  
+  .post_item_img {
+    float: left;
+    height: auto;
+    margin: 0 10px 2px 0;
+    padding: 0;
+    width: auto;
+  }
+  .thumbnail {
+    display: block;
+    height: 280px;
+    margin-bottom: 0px;
+  }
+  .righteous {
+    font-family: "Righteous", cursive;
+  }
+  .roboto {
+    font-family: "Roboto Slab", serif;
+  }
+  .bauhaus {
+    font-family: "Bauhaus 93", sans-serif;
+  }
+  .placeholder-search::placeholder {
+    color: white;
+  }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

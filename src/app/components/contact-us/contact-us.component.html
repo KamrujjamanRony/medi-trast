@@ -1,0 +1,176 @@
+<app-cover [title]="yourTitle" [sub1]="yourSub1" [sub2]="yourSub2"></app-cover>
+
+
+@if (addressInfo) {
+  <div class="w-full max-w-7xl mx-auto">
+    <form
+    #form="ngForm"
+    (ngSubmit)="onFormSubmit()"
+    class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+  >
+
+    <div class="mb-4">
+      <label
+        class="block text-gray-700 text-sm font-bold mb-2"
+        for="address1"
+      >
+      Address 01
+      </label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="address1"
+        name="address1"
+        type="text"
+        placeholder="Enter Your Address"
+        [(ngModel)]="addressInfo.address1"
+      />
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="address2">
+        address 02
+      </label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="address2"
+        name="address2"
+        type="text"
+        placeholder="Enter your address"
+        [(ngModel)]="addressInfo.address2"
+      />
+    </div>
+    <div class="mb-4">
+      <label
+        class="block text-gray-700 text-sm font-bold mb-2"
+        for="phoneNumber1"
+      >
+      Phone Number 01
+      </label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="phoneNumber1"
+        name="phoneNumber1"
+        type="text"
+        placeholder="Enter your phone number"
+        [(ngModel)]="addressInfo.phoneNumber1"
+      />
+    </div>
+    <div class="mb-4">
+      <label
+        class="block text-gray-700 text-sm font-bold mb-2"
+        for="phoneNumber2"
+      >
+      Phone Number 02
+      </label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="phoneNumber2"
+        name="phoneNumber2"
+        type="text"
+        placeholder="Enter your phone number"
+        [(ngModel)]="addressInfo.phoneNumber2"
+      />
+    </div>
+    <div class="mb-4">
+      <label
+        class="block text-gray-700 text-sm font-bold mb-2"
+        for="phoneNumber3"
+      >
+      Phone Number 03
+      </label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="phoneNumber3"
+        name="phoneNumber3"
+        type="text"
+        placeholder="Enter your phone number"
+        [(ngModel)]="addressInfo.phoneNumber3"
+      />
+    </div>
+    <div class="mb-4">
+      <label
+        class="block text-gray-700 text-sm font-bold mb-2"
+        for="email"
+      >
+      Email
+      </label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="email"
+        name="email"
+        type="email"
+        placeholder="Enter your email"
+        [(ngModel)]="addressInfo.email"
+      />
+    </div>
+    <div class="mb-4">
+      <label
+        class="block text-gray-700 text-sm font-bold mb-2"
+        for="facebookLink"
+      >
+      Facebook Link
+      </label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="facebookLink"
+        name="facebookLink"
+        type="text"
+        placeholder="Enter your facebook link"
+        [(ngModel)]="addressInfo.facebookLink"
+      />
+    </div>
+    <div class="mb-4">
+      <label
+        class="block text-gray-700 text-sm font-bold mb-2"
+        for="othersLink1"
+      >
+      Others Link 01
+      </label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="othersLink1"
+        name="othersLink1"
+        type="text"
+        placeholder="Enter your others link"
+        [(ngModel)]="addressInfo.othersLink1"
+      />
+    </div>
+    <div class="mb-4">
+      <label
+        class="block text-gray-700 text-sm font-bold mb-2"
+        for="othersLink2"
+      >
+      Others Link 02
+      </label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="othersLink2"
+        name="othersLink2"
+        type="text"
+        placeholder="Enter your others link"
+        [(ngModel)]="addressInfo.othersLink2"
+      />
+    </div>
+    <input
+      type="submit"
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+      value="Update"
+    />
+  </form>
+    <p class="text-center text-gray-500 text-xs">
+      &copy;2023 <span class="text-accent"> Medi-Trust Engineers</span>.
+      All rights reserved.
+    </p>
+  </div>
+} @else {
+  <div
+    class="block mt-10 mb-4 mx-auto h-12 w-12 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+    role="status"
+  >
+    <span
+      class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
+      >Loading...</span
+    >
+  </div>
+
+  <div class="text-center">Loading...</div>
+}

@@ -1,0 +1,67 @@
+<div class="container mx-auto my-12 text-sm">
+  <div class="card md:card-side bg-base-100 shadow-xl rounded-none">
+    @if (product) {
+      <img
+      src="{{
+        product?.imageUrl !== ''
+          ? ImageApi + product?.imageUrl
+          : emptyImg
+      }}"
+      class="min-h-96 md:h-96 m-2 hover-scale"
+      alt="Product Image"
+    />
+    }
+    <div class="card-body">
+      <h2 class="card-title">{{ product?.productName }}</h2>
+      @if (product?.brand) {<p><span class="font-semibold">Brand:</span> {{ product?.brand }}</p>}
+      @if (product?.model) {<p><span class="font-semibold">model:</span> {{ product?.model }}</p>}
+      @if (product?.origin) {<p><span class="font-semibold">origin:</span> {{ product?.origin }}</p>}
+      @if (product?.productCategory) {
+        <p>
+          <span class="font-semibold">Product Category:</span>
+          {{ product?.productCategory }}
+        </p>
+      }
+      @if (product?.description) {
+        <p class="font-semibold">Description:</p>
+          <p style="white-space: pre-line">{{ product.description }}</p>
+      }
+      @if (product?.aditionalInformation) {
+        <p class="font-semibold">Additional Information:</p>
+        <p style="white-space: pre-line">{{ product.aditionalInformation }}</p>
+      }
+      @if (product?.specialFeature) {
+        <p class="font-semibold">Special Feature:</p>
+        <p style="white-space: pre-line">{{ product.specialFeature }}</p>
+      }
+      <!-- Download Catalog Link -->
+      @if (product?.catalogUrl) {
+        <div class="card-actions justify-end">
+          <a
+            class="btn btn-accent rounded text-white capitalize px-8 font-light text-xl"
+            [href]="
+              'https://drive.google.com/uc?export=download&id=' +
+              product?.catalogUrl
+            "
+            target="_blank"
+            download
+            rel="noopener noreferrer"
+          >
+            Download Product Catalog
+          </a>
+        </div>
+      }
+    </div>
+  </div>
+</div>
+
+<div class="container mx-auto">
+  <div class="text-center">
+    <h1 class="text-5xl py-10">Our All Products</h1>
+    <div
+      class="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 grid-cols-1 justify-items-center gap-10"
+    >
+    @for (product of products$ | async; track $index) {<app-product-card [product]="product"></app-product-card>}
+    </div>
+  </div>
+</div>
