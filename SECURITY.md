@@ -86,6 +86,20 @@ real magic bytes (PNG/JPEG/WEBP), **embedded payload markers** (`<?php`,
 checks, a 3 MB size cap, filename sanitisation, and a real decode via
 `createImageBitmap`.
 
+### 9. Admin route guard
+
+The guard is applied **per child route**, never as the parent's
+`canActivateChild`. The guard redirects to `/mte12`, and `/mte12` resolves to
+the empty-path child — so guarding that child makes it redirect to itself in an
+infinite synchronous loop that hangs the browser tab.
+
+The empty-path child is safe unguarded because `AdminLayoutComponent` only
+renders its `<router-outlet>` in the unlocked branch, so the routed component
+is never constructed while the panel is locked.
+
+> The admin panel URL is **`/#/mte12`**, with the hash. The app uses
+> `withHashLocation()`, so `/mte12` without the `#` just loads the home page.
+
 ### 4 & 6. CSP and security headers
 
 `script-src 'self'` is the single most valuable control here: injected inline

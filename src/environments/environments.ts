@@ -4,9 +4,9 @@ export const environment = {
     // PBKDF2-SHA256 salt + hash, which are useless without the password.
     // Regenerate with: node tools/generate-admin-hash.mjs "your new password"
     adminAuth: {
-        salt: '5a56c9edb569b3f002eb2565ede25b2c',
-        hash: 'd1bb91d93a3fa62d305880626d1237ebd6e7da8a7406e1fe4616aa7795358622',
-        iterations: 310000,
+    "salt": "b18bb49386df6e3c9d81ba628b2e085a",
+    "hash": "7c36b81d268ba4ba1cf059c3e24279910575c79f7427271f681b6543e18990ec",
+    "iterations": 310000
     },
     companyCode: 1,
     location: 'MEDI-TRUST ENGINEERS, 7th Floor, Block-B, Mirpur Tower, Darus Salam Road, Mirpur-1, Dhaka-1216',
