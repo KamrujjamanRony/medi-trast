@@ -93,9 +93,14 @@ The guard is applied **per child route**, never as the parent's
 the empty-path child — so guarding that child makes it redirect to itself in an
 infinite synchronous loop that hangs the browser tab.
 
-The empty-path child is safe unguarded because `AdminLayoutComponent` only
-renders its `<router-outlet>` in the unlocked branch, so the routed component
-is never constructed while the panel is locked.
+The empty-path child is safe unguarded because `AdminLayout` only renders its
+`<router-outlet>` in the unlocked branch, so the routed component is never
+constructed while the panel is locked.
+
+The guard calls `auth.checkUnlocked()` rather than reading the `isUnlocked`
+signal. The signal is backed by a coarse clock that ticks every 15 seconds,
+which is fine for rendering but would let an expired session pass the guard for
+up to that long; `checkUnlocked()` re-reads the real clock first.
 
 > The admin panel URL is **`/#/mte12`**, with the hash. The app uses
 > `withHashLocation()`, so `/mte12` without the `#` just loads the home page.
@@ -162,22 +167,46 @@ are what stop the malware uploads.
 
 ---
 
-## Remaining dependency vulnerabilities
+## Dependency vulnerabilities
 
-`npm audit fix` was applied (20 → 14 in production dependencies). The rest need
-major upgrades that would break the UI:
+**`npm audit` now reports 0 vulnerabilities**, in both production and dev
+dependencies.
 
-- `igniteui-angular` 16 → 22 (`uuid` advisory)
-- `@angular/cdk` and `@angular/material` are on 16 while `@angular/core` is on 19
+The 14 that previously remained were resolved by the Angular 22 upgrade, which
+removed the packages carrying them. `igniteui-angular` (and its `hammerjs` and
+`fflate` dependencies), `@angular/material`, `@angular/cdk`, `tw-elements`,
+`daisyui`, the two `@fortawesome/*` packages, `font-awesome` and `aos` are all
+gone — each was pinned to an Angular 16-era version and each was replaced by a
+small amount of first-party code:
 
-That peer mismatch is why `npm install` needs `--legacy-peer-deps`. Aligning
-Material/CDK to 19 is worth scheduling, but it is a UI regression risk and was
-deliberately left out of this pass.
+| Removed | Replaced by |
+|---|---|
+| `igniteui-angular` (+ `hammerjs`, `fflate`) | `shared/components/hero-carousel.ts` |
+| `@angular/material`, `@angular/cdk` | `shared/ui/confirm-delete.ts`, on a native `<dialog>` |
+| `aos` | `core/directives/reveal.directive.ts` |
+| `@fortawesome/*`, `font-awesome` | `shared/ui/icon.ts`, inline SVG |
+| `daisyui`, `tw-elements` | Design tokens and component classes in `src/styles.css` |
 
-## Known non-security breakage
+`npm install` no longer needs `--legacy-peer-deps`; the peer graph is consistent.
 
-The header logo (`src/app/components/header/header.component.html`) points at
-`https://drive.google.com/uc?id=16joeL1nOPhRfLT6l1dM5byY4OzZeh_Qv`, which now
-redirects to a Google sign-in page — the file is no longer publicly shared. This
-was already broken before these changes. Host the logo in `src/assets/` instead;
-you can then also drop the Google hosts from `img-src` in the CSP.
+## Attack surface reduced by the upgrade
+
+Two third-party origins were dropped from the Content-Security-Policy, because
+nothing loads from them any more:
+
+- `https://use.fontawesome.com` — a render-blocking FontAwesome 5 stylesheet,
+  loaded *in addition to* the bundled FontAwesome 4 CSS.
+- `https://fonts.cdnfonts.com` — the "Bauhaus 93" webfont.
+
+`img-src` also no longer trusts `drive.google.com`,
+`drive.usercontent.google.com` or `lh3.googleusercontent.com`. The header logo
+that needed them was hot-linked from
+`https://drive.google.com/uc?id=16joeL1nOPhRfLT6l1dM5byY4OzZeh_Qv`, which had
+stopped serving an image and returned a Google sign-in page instead. It is now
+an inline SVG in `shared/components/site-header.ts`, so the logo works offline
+and three Google hosts left the policy.
+
+Product catalogue links are also validated now. `catalogUrl` is stored through
+the unauthenticated API, and the old template concatenated it directly into a
+Drive download URL; it is checked against a strict file-id pattern before a link
+is rendered (`pages/product-details/product-details.ts`).

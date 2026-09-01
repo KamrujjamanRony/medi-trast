@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, computed, signal } from '@angular/core';
 import { environment } from '@environments/environments';
 
 /**
@@ -15,9 +15,14 @@ import { environment } from '@environments/environments';
  * The API at environment.*Api still accepts unauthenticated writes, so an
  * attacker can bypass this entirely by calling it directly. Server-side
  * authentication is the only actual fix. See SECURITY.md.
+ *
+ * The unlocked state is exposed as a signal. Under Angular's zoneless change
+ * detection the previous plain getter would not have re-rendered the panel when
+ * the session expired — nothing told the framework the value had changed.
  */
 
 const SESSION_TIMEOUT_MS = 20 * 60 * 1000; // auto-lock after 20 minutes idle
+const CLOCK_TICK_MS = 15 * 1000;
 const MAX_ATTEMPTS = 5;
 const LOCKOUT_MS = 15 * 60 * 1000;
 const LOCKOUT_STORAGE_KEY = 'mte.admin.lockout';
@@ -52,35 +57,42 @@ export class AdminAuthService {
    * a cookie would just be another thing an attacker can set by hand, and it
    * would survive across tabs.
    */
-  private unlockedUntil = 0;
+  private readonly unlockedUntil = signal(0);
+
+  /** Coarse clock so `isUnlocked` re-evaluates as the idle deadline passes. */
+  private readonly clock = signal(Date.now());
+  private ticker?: ReturnType<typeof setInterval>;
 
   /** True while the current session is unlocked and not idle-expired. */
-  isUnlocked(): boolean {
-    if (this.unlockedUntil === 0) {
-      return false;
-    }
-    if (Date.now() >= this.unlockedUntil) {
-      this.lock();
-      return false;
-    }
-    return true;
+  readonly isUnlocked = computed(() => this.unlockedUntil() > this.clock());
+
+  /** True once an unlocked session has lapsed, so the UI can explain why. */
+  readonly didTimeOut = signal(false);
+
+  /**
+   * Authoritative, non-reactive check. The cached `clock` can lag by up to
+   * CLOCK_TICK_MS, which is fine for rendering but not for a route guard.
+   */
+  checkUnlocked(): boolean {
+    this.clock.set(Date.now());
+    return this.isUnlocked();
   }
 
   /** Extends the idle timeout. Call on meaningful admin activity. */
   touch(): void {
-    if (this.unlockedUntil !== 0) {
-      this.unlockedUntil = Date.now() + SESSION_TIMEOUT_MS;
+    if (this.unlockedUntil() !== 0) {
+      this.unlockedUntil.set(Date.now() + SESSION_TIMEOUT_MS);
     }
   }
 
   lock(): void {
-    this.unlockedUntil = 0;
+    this.unlockedUntil.set(0);
+    this.stopTicker();
   }
 
   /** Milliseconds remaining on an active lockout, or 0 if not locked out. */
   lockoutRemainingMs(): number {
-    const state = this.readLockout();
-    return Math.max(0, state.lockedUntil - Date.now());
+    return Math.max(0, this.readLockout().lockedUntil - Date.now());
   }
 
   async unlock(password: string): Promise<UnlockResult> {
@@ -129,8 +141,29 @@ export class AdminAuthService {
     }
 
     this.clearLockout();
-    this.unlockedUntil = Date.now() + SESSION_TIMEOUT_MS;
+    this.didTimeOut.set(false);
+    this.clock.set(Date.now());
+    this.unlockedUntil.set(Date.now() + SESSION_TIMEOUT_MS);
+    this.startTicker();
     return { ok: true };
+  }
+
+  private startTicker(): void {
+    this.stopTicker();
+    this.ticker = setInterval(() => {
+      this.clock.set(Date.now());
+      if (!this.isUnlocked()) {
+        this.didTimeOut.set(true);
+        this.stopTicker();
+      }
+    }, CLOCK_TICK_MS);
+  }
+
+  private stopTicker(): void {
+    if (this.ticker) {
+      clearInterval(this.ticker);
+      this.ticker = undefined;
+    }
   }
 
   private readLockout(): LockoutState {

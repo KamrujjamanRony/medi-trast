@@ -41,6 +41,15 @@ export function toSafeExternalUrl(value: string | null | undefined): string | nu
     return null;
   }
 
+  // Reject embedded credentials. `https://trusted.com@evil.com` navigates to
+  // evil.com while reading as trusted.com, which is the standard way a stored
+  // link is disguised. It also catches a plain email address being saved in a
+  // website field: `name@gmail.com` would otherwise parse as host gmail.com
+  // with the username `name`, and render as a working link to Gmail.
+  if (parsed.username || parsed.password) {
+    return null;
+  }
+
   // Prefer https even when the stored value said http.
   if (parsed.protocol.toLowerCase() === 'http:') {
     parsed.protocol = 'https:';

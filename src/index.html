@@ -1,10 +1,12 @@
 <!doctype html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Medi-Trust Engineers</title>
+  <title>Medi-Trust Engineers — Medical Equipment Supplier</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Medi-Trust Engineers supplies surgical, medical, laboratory and dental equipment, medical furniture and accessories across Bangladesh.">
+  <meta name="theme-color" content="#00a393">
 
   <!--
     Content-Security-Policy. This is the main defence against injected malware:
@@ -15,6 +17,10 @@
     web.config sends the authoritative policy as a response header (which also
     carries frame-ancestors). This meta tag is the fallback for any host that
     does not apply web.config. Keep the two in sync.
+
+    use.fontawesome.com and fonts.cdnfonts.com were removed along with the
+    FontAwesome and Bauhaus 93 stylesheets: icons are inline SVG now, so the
+    policy no longer has to trust two extra third-party origins.
   -->
   <meta http-equiv="Content-Security-Policy" content="
     default-src 'self';
@@ -22,9 +28,9 @@
     object-src 'none';
     form-action 'self';
     script-src 'self';
-    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://use.fontawesome.com https://fonts.cdnfonts.com;
-    font-src 'self' data: https://fonts.gstatic.com https://use.fontawesome.com https://fonts.cdnfonts.com;
-    img-src 'self' data: blob: https://mec.supersoftbd.com https://drive.google.com https://drive.usercontent.google.com https://lh3.googleusercontent.com;
+    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+    font-src 'self' data: https://fonts.gstatic.com;
+    img-src 'self' data: blob: https://mec.supersoftbd.com;
     connect-src 'self' https://mec.supersoftbd.com;
     frame-src https://maps.google.com https://www.google.com;
     media-src 'self';
@@ -36,20 +42,10 @@
 
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 
-  <!--
-    The FontAwesome kit script (kit.fontawesome.com/a8db4b3ad0.js) was removed.
-    It was remote, executable, unversioned and had no integrity hash, so whoever
-    controls that kit could run arbitrary JavaScript on every page of this site.
-    All icon usage here is FontAwesome 4 syntax (`fa fa-facebook`), which is
-    already served locally from the bundled font-awesome package listed in
-    angular.json. Icons are unaffected.
-  -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Titillium+Web:300,400,600,700" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <!-- Fonts are loaded from the stylesheet so the browser only fetches the
+       weights actually used; preconnect removes a round trip. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
 <body>
   <app-root></app-root>
