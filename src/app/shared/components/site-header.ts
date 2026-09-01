@@ -17,7 +17,9 @@ import { Icon } from '../ui/icon';
  *  - `app-header` used `routerLink` on its logo but never imported `RouterLink`,
  *    so the attribute was inert and the logo was not clickable at all. Its logo
  *    was also hot-linked from a Google Drive `uc?id=` URL, which is rate-limited
- *    and serves an HTML interstitial rather than an image; it is an inline SVG now.
+ *    and serves an HTML interstitial rather than an image. The header now shows the
+ *    company mark from `public/assets/logo.png` — the same artwork as the
+ *    favicon — served from this origin, so no third-party host is needed.
  *  - the products dropdown called `toggleDropdown()` from `mouseenter`,
  *    `mouseleave` *and* `click`, so clicking it flipped the state twice and
  *    moving the pointer away flipped it again. It is now an explicit button with
@@ -60,17 +62,14 @@ import { Icon } from '../ui/icon';
     <header class="masthead">
       <div class="shell flex items-center gap-4 py-3">
         <a routerLink="/" class="brand" aria-label="Medi-Trust Engineers — home">
-          <svg viewBox="0 0 44 44" class="brand-mark" aria-hidden="true">
-            <rect width="44" height="44" rx="12" fill="var(--color-brand-600)" />
-            <path
-              d="M14 22h4l2.5-6 3 12 2.5-6h4"
-              fill="none"
-              stroke="#fff"
-              stroke-width="2.4"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
+          <img
+            class="brand-mark"
+            src="assets/logo.png"
+            alt=""
+            width="196"
+            height="190"
+            decoding="async"
+          />
           <span class="brand-text">
             <span class="brand-name">
               <span class="brand-name-accent">Medi</span>-Trust Engineers
@@ -264,9 +263,10 @@ import { Icon } from '../ui/icon';
     }
 
     .brand-mark {
-      width: 2.5rem;
-      height: 2.5rem;
+      width: auto;
+      height: 2.75rem;
       flex: none;
+      object-fit: contain;
     }
 
     .brand-text {
